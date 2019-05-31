@@ -58,7 +58,11 @@ public class Lovers : MonoBehaviour
     private void UpdateFollowingForLover()
     {
         playerLocation = player.GetComponent<Controls>().direction;
+        MovementForLover();
+    }
 
+    private void MovementForLover()
+    {
         if (playerLocation.x == 0 && playerLocation.y == 1) // Up
         {
             distanceFromPlayer.x = 0;
