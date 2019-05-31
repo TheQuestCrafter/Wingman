@@ -8,12 +8,17 @@ public class Manager : MonoBehaviour
     public GameObject playerObject;
     public GameObject[] npcList = new GameObject[20];
     public GameObject[] coupleList = new GameObject[10];
-    public string[] possibleInterests;
+    private List<string> possibleInterestsList;
     public static string interestSaveLocation = AppDomain.CurrentDomain.DynamicDirectory + "interestList.txt";
+
+    public float timeLimit; // in seconds
+    public float displayTime; // used to display a countdown;
 
     private void Awake()
     {
-        possibleInterests = readInterests();
+        possibleInterestsList = new List<string>();
+        loadInterests(); // Check file for possible interests
+        timeLimit = 180;
     }
 
 
@@ -26,20 +31,35 @@ public class Manager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        displayTime = timeLimit - Time.time;
     }
 
-    private string[] readInterests()
+    private void determineLoverCoupleInterest()
+    {
+        string sharedInterest = possibleInterestsList[UnityEngine.Random.Range(0, possibleInterestsList.Count)];
+        possibleInterestsList.Remove(sharedInterest);
+
+
+        // Spawn two lovers which will be a "couple" and give them the same interest. 
+        //coupleList
+
+    }
+
+    private void loadInterests()
     {
         try
         {
-            string[] interests = System.IO.File.ReadAllLines(interestSaveLocation);
+            string[] possibleInterests = System.IO.File.ReadAllLines(interestSaveLocation);
 
-            return interests;
+            for(int i = 0; i < possibleInterests.Length; i++)
+            {
+                possibleInterestsList.Add(possibleInterests[i]);
+            }
+            
         }
         catch(Exception e)
         {
-            return new string[1];
+            //return new string[1];
         }
     }
 
