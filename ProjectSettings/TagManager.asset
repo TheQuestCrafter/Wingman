@@ -3,7 +3,11 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - PassiveNPC
+  - DrunkNPC
+  - AggressiveNPC
+  - Obstacle
   layers:
   - Default
   - TransparentFX
@@ -13,8 +17,8 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
+  - Obstacle
+  - Player
   - 
   - 
   - 
