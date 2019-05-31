@@ -6,6 +6,7 @@ public class Controls : MonoBehaviour
 {
     public Rigidbody2D rb2d;
     public Vector2 direction;
+    public Vector2 directionNormalized;
     public float movementSpeed;
 
     private Vector3 velocity = Vector3.zero;
@@ -44,9 +45,10 @@ public class Controls : MonoBehaviour
         vMove = Input.GetAxis("Vertical");
 
         direction = new Vector2(hMove, vMove);
-        direction.Normalize();
+        directionNormalized = direction;
+        directionNormalized.Normalize();
 
-        rb2d.velocity = Vector3.SmoothDamp(rb2d.velocity, (direction * movementSpeed), ref velocity, movementSmoothing);
+        rb2d.velocity = Vector3.SmoothDamp(rb2d.velocity, (directionNormalized * movementSpeed), ref velocity, movementSmoothing);
 
         //rb2d.velocity = direction * movementSpeed;
 
