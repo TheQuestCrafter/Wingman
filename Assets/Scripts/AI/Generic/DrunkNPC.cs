@@ -7,6 +7,7 @@ public class DrunkNPC : GenericNPCMovement
     [SerializeField]
     LayerMask playerMask;
 
+    [SerializeField]
     GameObject player;
 
     CircleCollider2D cc2d;
@@ -23,7 +24,7 @@ public class DrunkNPC : GenericNPCMovement
         if (Physics2D.OverlapCircle(this.transform.position, cc2d.radius, playerMask))
         {
             this.destinationLocation = player.transform.position;
-            speed = 1;
+            speed = 2;
             Movement();
         }
         else
