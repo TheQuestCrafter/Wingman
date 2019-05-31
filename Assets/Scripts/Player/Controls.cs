@@ -5,6 +5,9 @@ using UnityEngine;
 public class Controls : MonoBehaviour
 {
     public Rigidbody2D rb2d;
+    public CircleCollider2D cc2d;
+
+    public float hMove, vMove;
     public Vector2 direction;
     public Vector2 directionNormalized;
     public float movementSpeed;
@@ -12,12 +15,14 @@ public class Controls : MonoBehaviour
     private Vector3 velocity = Vector3.zero;
     private float movementSmoothing = 0.05f;
     
-    public float hMove, vMove;
-    public GameObject talkingTarget; // Who the player is talking to
+    public GameObject talkingTarget; // Who the player is talking to. Will be most recently entered "Lover".
+    public List<GameObject> nearbyTargets;
+    public bool spaceDown;
 
     private void Awake()
     {
         rb2d = this.gameObject.GetComponent<Rigidbody2D>();
+        cc2d = this.gameObject.GetComponent<CircleCollider2D>();
         movementSpeed = 2;
     }
 
@@ -32,7 +37,7 @@ public class Controls : MonoBehaviour
     {
         MovePlayer();
         RotatePlayer();
-
+        CheckTalkButton();
     }
 
     private void MovePlayer()
@@ -57,5 +62,48 @@ public class Controls : MonoBehaviour
     private void RotatePlayer()
     {
         // Update the sprite here
+    }
+
+    private void Talk()
+    {
+
+    }
+
+    private void CheckTalkButton()
+    {
+        spaceDown = Input.GetKeyDown("space");
+
+        if(spaceDown)
+        {
+            if(talkingTarget != null) // talking target is not blank
+            {
+                if(nearbyTargets.Contains(talkingTarget)) // talking target is within talking radius
+                {
+                    Talk();
+                }
+            }
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Lover") // ADD TAG  
+        {
+            talkingTarget = collision.gameObject;
+            nearbyTargets.Add(collision.gameObject);
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Lover") // ADD TAG  
+        {
+            nearbyTargets.Remove(collision.gameObject);
+            
+            if(nearbyTargets.Count > 0)
+            {
+                talkingTarget = nearbyTargets[nearbyTargets.Count - 1]; // assign to most recently entered target
+            }
+        }
     }
 }

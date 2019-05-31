@@ -34,6 +34,12 @@ public class Manager : MonoBehaviour
         displayTime = timeLimit - Time.time;
     }
 
+    private void checkMatch()
+    {
+        // good match = send both a true bool
+        // bad match = send one a true and send the other a false
+    }
+
     private void determineLoverCoupleInterest()
     {
         string sharedInterest = possibleInterestsList[UnityEngine.Random.Range(0, possibleInterestsList.Count)];
