@@ -14,8 +14,12 @@ public class Lovers : MonoBehaviour
     LoverStates currentState;
     [SerializeField]
     Vector2 distanceFromPlayer;
+    [SerializeField]
+    float patience;
 
+    [SerializeField]
     public GameObject player;
+    public string interest;
 
     private Vector2 playerLocation;
     // Start is called before the first frame update
@@ -45,7 +49,7 @@ public class Lovers : MonoBehaviour
 
     private void UpdateLookingForLover()
     {
-        if(player.GetComponent<Controls>.talkingTarget.Equals(this.gameObject))
+        if(player.GetComponent<Controls>().talkingTarget.Equals(this.gameObject))
         {
             currentState = LoverStates.FollowingForLover;
         }
@@ -53,41 +57,50 @@ public class Lovers : MonoBehaviour
 
     private void UpdateFollowingForLover()
     {
-        playerLocation = player.GetComponent<Controls>.direction;
+        playerLocation = player.GetComponent<Controls>().direction;
 
         if (playerLocation.x == 0 && playerLocation.y == 1) // Up
         {
             distanceFromPlayer.x = 0;
             distanceFromPlayer.y = -distanceFromPlayer.y;
-            this.transform.position = Vector2.MoveTowards(this.transform.position, DistanceFromPlayer(distanceFromPlayer, playerLocation), Time.deltaTime);
+            this.transform.position = Vector2.MoveTowards(this.transform.position, DistanceFromPlayer(distanceFromPlayer, player.transform.position), Time.deltaTime);
         }
         else if (playerLocation.x == 0 && playerLocation.y == -1) // Down
         {
+            distanceFromPlayer.x = 0;
+            this.transform.position = Vector2.MoveTowards(this.transform.position, DistanceFromPlayer(distanceFromPlayer, player.transform.position), Time.deltaTime);
 
         }
         else if (playerLocation.x == -1 && playerLocation.y == 0) //Left
         {
-
+            distanceFromPlayer.x = -distanceFromPlayer.x;
+            distanceFromPlayer.y = 0;
+            this.transform.position = Vector2.MoveTowards(this.transform.position, DistanceFromPlayer(distanceFromPlayer, player.transform.position), Time.deltaTime);
         }
         else if (playerLocation.x == 1 && playerLocation.y == 0) // Right 
         {
-
+            distanceFromPlayer.y = 0;
+            this.transform.position = Vector2.MoveTowards(this.transform.position, DistanceFromPlayer(distanceFromPlayer, player.transform.position), Time.deltaTime);
         }
         else if (playerLocation.x == 1 && playerLocation.y == 1) // Up Right
         {
-
+            this.transform.position = Vector2.MoveTowards(this.transform.position, DistanceFromPlayer(distanceFromPlayer, player.transform.position), Time.deltaTime);
         }
         else if (playerLocation.x == -1 && playerLocation.y == 1) // Up Left
         {
-
+            distanceFromPlayer.x = -distanceFromPlayer.x;
+            this.transform.position = Vector2.MoveTowards(this.transform.position, DistanceFromPlayer(distanceFromPlayer, player.transform.position), Time.deltaTime);
         }
         else if (playerLocation.x == 1 && playerLocation.y == -1) // Down Right 
         {
-
+            distanceFromPlayer.y = -distanceFromPlayer.y;
+            this.transform.position = Vector2.MoveTowards(this.transform.position, DistanceFromPlayer(distanceFromPlayer, player.transform.position), Time.deltaTime);
         }
         else if (playerLocation.x == -1 && playerLocation.y == -1) // Down Left
         {
-
+            distanceFromPlayer.x = -distanceFromPlayer.x;
+            distanceFromPlayer.y = -distanceFromPlayer.y;
+            this.transform.position = Vector2.MoveTowards(this.transform.position, DistanceFromPlayer(distanceFromPlayer, player.transform.position), Time.deltaTime);
         }
         else
         {
@@ -97,11 +110,11 @@ public class Lovers : MonoBehaviour
 
     private Vector2 DistanceFromPlayer(Vector2 distance,  Vector2 playerLocation)
     {
-        Vector2 targetDistance;
+        Vector2 targetDistance = new Vector2();
 
-        targetDistance.x = playerLocation.x + distance.x;
+        targetDistance.x += playerLocation.x + distance.x;
 
-        targetDistance.y = playerLocation.y + distance.y;
+        targetDistance.y += playerLocation.y + distance.y;
 
         return targetDistance;
     }
