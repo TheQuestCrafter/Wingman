@@ -7,7 +7,8 @@ public class Lovers : MonoBehaviour
     enum LoverStates
     {
         LookingForLover,
-        FollowingForLover
+        FollowingForLover,
+        WalkAway
     }
 
     [SerializeField]
@@ -16,16 +17,25 @@ public class Lovers : MonoBehaviour
     Vector2 distanceFromPlayer;
     [SerializeField]
     float patience;
-
+    [SerializeField]
+    float speed;
     [SerializeField]
     public GameObject player;
+
+    Camera cam;
     public string interest;
+    public bool walkUp;
 
     private Vector2 playerLocation;
+    private Plane[] cameraPlanes;
+    private Vector3 velocity = Vector3.zero;
+    private float movementSmoothing = 0.05f;
+    private Collider2D collider;
     // Start is called before the first frame update
     void Start()
     {
         currentState = LoverStates.LookingForLover;
+        cam = Camera.main;
     }
 
     // Update is called once per frame
@@ -44,6 +54,9 @@ public class Lovers : MonoBehaviour
             case (LoverStates.FollowingForLover):
                 UpdateFollowingForLover();
                 break;
+            case (LoverStates.WalkAway):
+                UpdateWalkAway();
+                break;
         }
     }
 
@@ -59,6 +72,15 @@ public class Lovers : MonoBehaviour
     {
         playerLocation = player.GetComponent<Controls>().direction;
         MovementForLover();
+        if(patience <= 0)
+        {
+            currentState = LoverStates.WalkAway;
+        }
+    }
+
+    private void UpdateWalkAway()
+    {
+        WalkAway();
     }
 
     private void MovementForLover()
@@ -67,49 +89,50 @@ public class Lovers : MonoBehaviour
         {
             distanceFromPlayer.x = 0;
             distanceFromPlayer.y = -distanceFromPlayer.y;
-            this.transform.position = Vector2.MoveTowards(this.transform.position, DistanceFromPlayer(distanceFromPlayer, player.transform.position), Time.deltaTime);
+            this.transform.position = Vector2.MoveTowards(this.transform.position, DistanceFromPlayer(distanceFromPlayer, player.transform.position), speed * Time.deltaTime);
         }
         else if (playerLocation.x == 0 && playerLocation.y == -1) // Down
         {
             distanceFromPlayer.x = 0;
-            this.transform.position = Vector2.MoveTowards(this.transform.position, DistanceFromPlayer(distanceFromPlayer, player.transform.position), Time.deltaTime);
+            this.transform.position = Vector2.MoveTowards(this.transform.position, DistanceFromPlayer(distanceFromPlayer, player.transform.position), speed * Time.deltaTime);
 
         }
         else if (playerLocation.x == -1 && playerLocation.y == 0) //Left
         {
             distanceFromPlayer.x = -distanceFromPlayer.x;
             distanceFromPlayer.y = 0;
-            this.transform.position = Vector2.MoveTowards(this.transform.position, DistanceFromPlayer(distanceFromPlayer, player.transform.position), Time.deltaTime);
+            this.transform.position = Vector2.MoveTowards(this.transform.position, DistanceFromPlayer(distanceFromPlayer, player.transform.position), speed * Time.deltaTime);
         }
         else if (playerLocation.x == 1 && playerLocation.y == 0) // Right 
         {
             distanceFromPlayer.y = 0;
-            this.transform.position = Vector2.MoveTowards(this.transform.position, DistanceFromPlayer(distanceFromPlayer, player.transform.position), Time.deltaTime);
+            this.transform.position = Vector2.MoveTowards(this.transform.position, DistanceFromPlayer(distanceFromPlayer, player.transform.position), speed * Time.deltaTime);
         }
         else if (playerLocation.x == 1 && playerLocation.y == 1) // Up Right
         {
-            this.transform.position = Vector2.MoveTowards(this.transform.position, DistanceFromPlayer(distanceFromPlayer, player.transform.position), Time.deltaTime);
+            this.transform.position = Vector2.MoveTowards(this.transform.position, DistanceFromPlayer(distanceFromPlayer, player.transform.position), speed * Time.deltaTime);
         }
         else if (playerLocation.x == -1 && playerLocation.y == 1) // Up Left
         {
             distanceFromPlayer.x = -distanceFromPlayer.x;
-            this.transform.position = Vector2.MoveTowards(this.transform.position, DistanceFromPlayer(distanceFromPlayer, player.transform.position), Time.deltaTime);
+            this.transform.position = Vector2.MoveTowards(this.transform.position, DistanceFromPlayer(distanceFromPlayer, player.transform.position), speed * Time.deltaTime);
         }
         else if (playerLocation.x == 1 && playerLocation.y == -1) // Down Right 
         {
             distanceFromPlayer.y = -distanceFromPlayer.y;
-            this.transform.position = Vector2.MoveTowards(this.transform.position, DistanceFromPlayer(distanceFromPlayer, player.transform.position), Time.deltaTime);
+            this.transform.position = Vector2.MoveTowards(this.transform.position, DistanceFromPlayer(distanceFromPlayer, player.transform.position), speed * Time.deltaTime);
         }
         else if (playerLocation.x == -1 && playerLocation.y == -1) // Down Left
         {
             distanceFromPlayer.x = -distanceFromPlayer.x;
             distanceFromPlayer.y = -distanceFromPlayer.y;
-            this.transform.position = Vector2.MoveTowards(this.transform.position, DistanceFromPlayer(distanceFromPlayer, player.transform.position), Time.deltaTime);
+            this.transform.position = Vector2.MoveTowards(this.transform.position, DistanceFromPlayer(distanceFromPlayer, player.transform.position), speed * Time.deltaTime);
         }
         else
         {
             //Player is not moving
         }
+        PatienceDecrease();
     }
 
     private Vector2 DistanceFromPlayer(Vector2 distance,  Vector2 playerLocation)
@@ -120,6 +143,42 @@ public class Lovers : MonoBehaviour
 
         targetDistance.y += playerLocation.y + distance.y;
 
+        Debug.Log("X: " + targetDistance.x + " Y: " + targetDistance.y);
+
         return targetDistance;
+    }
+
+    private void WalkAway()
+    {
+        if(walkUp)
+        {
+
+        }
+        else if(!walkUp)
+        {
+
+        }
+
+        DestroySelf();
+    }
+
+    private void DestroySelf()
+    {
+        cameraPlanes = GeometryUtility.CalculateFrustumPlanes(cam);
+
+        if(!GeometryUtility.TestPlanesAABB(cameraPlanes, collider.bounds))
+        {
+            Destroy(this, .5f);
+        }
+    }
+
+    private void PatienceDecrease()
+    {
+        patience -= patience * .05f;
+    }
+
+    public string ReturnInterest()
+    {
+        return interest;
     }
 }
