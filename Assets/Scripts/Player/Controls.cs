@@ -8,6 +8,8 @@ public class Controls : MonoBehaviour
     public Vector2 direction;
     public float movementSpeed;
 
+    private Vector3 velocity = Vector3.zero;
+    private float movementSmoothing = 0.05f;
     
     public float hMove, vMove;
     public GameObject talkingTarget; // Who the player is talking to
@@ -44,7 +46,9 @@ public class Controls : MonoBehaviour
         direction = new Vector2(hMove, vMove);
         direction.Normalize();
 
-        rb2d.AddForce(direction * movementSpeed);
+        rb2d.velocity = Vector3.SmoothDamp(rb2d.velocity, (direction * movementSpeed), ref velocity, movementSmoothing);
+
+        //rb2d.velocity = direction * movementSpeed;
 
     }
 
