@@ -18,6 +18,7 @@ public class AggressiveNPC : GenericNPCMovement
         {
             speed = 0;
         }
+        waitUntil = Time.time + waitTimeLength;
     }
     private void OnCollisionExit2D(Collision2D collision)
     {
@@ -29,5 +30,6 @@ public class AggressiveNPC : GenericNPCMovement
         {
             speed = 0;
         }
+        waitUntil = Time.time + waitTimeLength;
     }
 }

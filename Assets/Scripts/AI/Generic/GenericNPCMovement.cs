@@ -7,9 +7,9 @@ public class GenericNPCMovement : MonoBehaviour
     [SerializeField]
     public float changeSpeed;
     [SerializeField]
-    float waitTimeLength;
+    public float waitTimeLength;
     [SerializeField]
-    float waitUntil;
+    public float waitUntil;
     [SerializeField]
     public Vector2 destinationLocation;
     [SerializeField]
@@ -54,16 +54,5 @@ public class GenericNPCMovement : MonoBehaviour
             waitUntil = Time.time + waitTimeLength;
         }
     }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.collider.CompareTag("Obstacle"))
-        {
-            speed = 0;
-        }
-            
-
-    }
-
 
 }

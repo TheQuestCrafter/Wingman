@@ -48,20 +48,30 @@ MonoBehaviour:
   spawnUntil: 1
   numberToSpawn: 5
   maxNPC: []
-  drunkNPC_1: {fileID: 1304225320245856099, guid: 51a195cb86f889b4995c0bd12bc7d608,
-    type: 3}
-  aggressiveNPC_1: {fileID: 903225199056294939, guid: b84bb224ec399d848b61d4846057817f,
-    type: 3}
-  passiveNPC_1: {fileID: 7622926890978689463, guid: cef0151271c271c47ac7a64a6fcb022e,
-    type: 3}
   location: {fileID: 6306558547479182374}
   aggressiveNPC:
   - {fileID: 903225199056294939, guid: b84bb224ec399d848b61d4846057817f, type: 3}
   - {fileID: 7219995776352340813, guid: 3c82424f375a3904ca832f5d0f2a1436, type: 3}
   - {fileID: 6227616701993544015, guid: a592e5ee718689944a060996dc6939bc, type: 3}
   - {fileID: 6194940573611282979, guid: 420791bc8b97c0042a611acf8c61c0e0, type: 3}
-  drunkNPC: []
-  passiveNPC: []
+  - {fileID: 3126026520047061967, guid: b584c86a98f3e0b489d12989a1896df1, type: 3}
+  drunkNPC:
+  - {fileID: 1304225320245856099, guid: 51a195cb86f889b4995c0bd12bc7d608, type: 3}
+  - {fileID: 7422679720065051956, guid: e7e9165028b2f9542b00e974f2079741, type: 3}
+  - {fileID: 5530439435087551981, guid: 85e4b2fbf68a6944e8d1aab20a81528d, type: 3}
+  - {fileID: 8638843729672542409, guid: ceeed29c099938c46a42d0aa611b4c7e, type: 3}
+  passiveNPC:
+  - {fileID: 7622926890978689463, guid: cef0151271c271c47ac7a64a6fcb022e, type: 3}
+  - {fileID: 2165073089259251008, guid: c73ad3861c091694e98299f1ed7daf25, type: 3}
+  - {fileID: 7392725558740251691, guid: 59b8b560a8c91bc459c2ccec9676eea8, type: 3}
+  - {fileID: 1541274631349468801, guid: 27ee97bf94fca01419ef2a046086200d, type: 3}
+  - {fileID: 7132587680982973650, guid: aafc628df5698fc4ca3163723c114966, type: 3}
+  - {fileID: 8256485241267842581, guid: 464574688a37e1c4188e648284d7bec5, type: 3}
+  - {fileID: 5769856373716694483, guid: e8ee63f2e3a6dd041b6cc6a5295840fe, type: 3}
+  - {fileID: 7579199947681220941, guid: 9bd6a0c5be711a64db7874fc87cf0b13, type: 3}
+  - {fileID: 5066179056751118938, guid: 15032e97ef8e6494ab3ad27dc3401a8e, type: 3}
+  - {fileID: 4108801909187093967, guid: ec31b924c689c64439459f9189b35005, type: 3}
+  - {fileID: 8563835010340322743, guid: 9018e140d70c5394695415bcc0b1b8c1, type: 3}
 --- !u!1 &6306558547479182374
 GameObject:
   m_ObjectHideFlags: 0
@@ -117,5 +127,5 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 7, y: 7}
+  m_Size: {x: 5, y: 5}
   m_EdgeRadius: 0

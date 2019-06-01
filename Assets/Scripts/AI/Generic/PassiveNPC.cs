@@ -18,6 +18,6 @@ public class PassiveNPC : GenericNPCMovement
             speed = 0;
         }
 
-
+        waitUntil = Time.time + waitTimeLength;
     }
 }

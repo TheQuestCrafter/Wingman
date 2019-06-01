@@ -24,7 +24,7 @@ public class DrunkNPC : GenericNPCMovement
         if (Physics2D.OverlapCircle(this.transform.position, cc2d.radius, playerMask))
         {
             this.destinationLocation = player.transform.position;
-            speed = 2;
+            speed = 1;
             Movement();
         }
         else
@@ -37,5 +37,15 @@ public class DrunkNPC : GenericNPCMovement
     {
         
         transform.position = Vector2.MoveTowards(transform.position, destinationLocation, speed * Time.deltaTime);
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.collider.CompareTag("Obstacle"))
+        {
+            speed = 0;
+        }
+
+        waitUntil = Time.time + waitTimeLength;
     }
 }
