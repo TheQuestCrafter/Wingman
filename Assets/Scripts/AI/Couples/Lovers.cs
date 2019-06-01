@@ -22,20 +22,20 @@ public class Lovers : MonoBehaviour
     [SerializeField]
     public GameObject player;
 
-    Camera cam;
     public string interest;
     public bool walkUp;
 
     private Vector2 playerLocation;
-    private Plane[] cameraPlanes;
     private Vector3 velocity = Vector3.zero;
     private float movementSmoothing = 0.05f;
-    private Collider2D collider;
+    private float time;
+    private float maxPatience;
     // Start is called before the first frame update
     void Start()
     {
         currentState = LoverStates.LookingForLover;
-        cam = Camera.main;
+        maxPatience = patience;
+
     }
 
     // Update is called once per frame
@@ -152,29 +152,50 @@ public class Lovers : MonoBehaviour
     {
         if(walkUp)
         {
-
+            distanceFromPlayer.x = -1;
+            distanceFromPlayer.y = 0;
+            this.transform.position = Vector2.MoveTowards(this.transform.position, DistanceFromPlayer(distanceFromPlayer, this.transform.position), speed * Time.deltaTime);
         }
         else if(!walkUp)
         {
-
+            distanceFromPlayer.x = 1;
+            distanceFromPlayer.y = 0;
+            this.transform.position = Vector2.MoveTowards(this.transform.position, DistanceFromPlayer(distanceFromPlayer, this.transform.position), speed * Time.deltaTime);
         }
-
         DestroySelf();
     }
 
     private void DestroySelf()
     {
-        cameraPlanes = GeometryUtility.CalculateFrustumPlanes(cam);
-
-        if(!GeometryUtility.TestPlanesAABB(cameraPlanes, collider.bounds))
+        if(this.GetComponent<SpriteRenderer>().color.a > 0)
         {
-            Destroy(this, .5f);
+            this.GetComponent<SpriteRenderer>().color -= Color.black * 0.01f;
+        }
+        else
+        {
+            Destroy(this.gameObject, 0.5f);
         }
     }
 
     private void PatienceDecrease()
     {
-        patience -= patience * .05f;
+        if(patience > 0)
+        {
+            if (time >= 1)
+            {
+                patience -= maxPatience * .05f;
+                time = 0;
+            }
+            else
+            {
+                time += Time.deltaTime;
+            }
+        }
+        else
+        {
+            patience = 0;
+            WalkAway();
+        }
     }
 
     public string ReturnInterest()
