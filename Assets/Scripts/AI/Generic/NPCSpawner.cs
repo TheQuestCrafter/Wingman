@@ -15,7 +15,13 @@ public class NPCSpawner : MonoBehaviour
     List<GameObject> maxNPC;
 
     [SerializeField]
-    GameObject drunkNPC, aggressiveNPC, passiveNPC, location;
+    GameObject drunkNPC_1, aggressiveNPC_1, passiveNPC_1, location;
+    [SerializeField]
+    List<GameObject> aggressiveNPC;
+    [SerializeField]
+    List<GameObject> drunkNPC;
+    [SerializeField]
+    List<GameObject> passiveNPC;
 
 
     void Start()
@@ -41,29 +47,34 @@ public class NPCSpawner : MonoBehaviour
             if(Time.time > spawnUntil)
             {
                 int randomNum = (int)Random.Range(1f, 10f);
-                if(randomNum == 1)
+                int randomAggressiveNPC = (int)Random.Range(1f, 5f);
+                int randomDrunkNPC = (int)Random.Range(1f, 4f);
+                int randomPassiveNPC = (int)Random.Range(1f, 11f);
+
+
+                if (randomNum == 1)
                 {
 
-                    GameObject dNPC = Instantiate(drunkNPC, this.transform.position, this.transform.rotation);
+                    GameObject dNPC = Instantiate(drunkNPC_1, this.transform.position, this.transform.rotation);
                     dNPC.transform.parent = this.transform;
-                    dNPC.GetComponent<GenericNPCMovement>().fieldOfLocation = this.location;
+                    dNPC.GetComponent<DrunkNPC>().fieldOfLocation = this.location;
                     //Instantiate(dNPC, this.transform.position, this.transform.rotation);
                     maxNPC.Add(dNPC);
                 }
                 if (randomNum > 1 && randomNum <= 4)
                 {
-                    GameObject aNPC = Instantiate(aggressiveNPC, this.transform.position, this.transform.rotation);
+                    GameObject aNPC = Instantiate(aggressiveNPC[randomAggressiveNPC], this.transform.position, this.transform.rotation);
                     aNPC.transform.parent = this.transform;
-                    aNPC.GetComponent<GenericNPCMovement>().fieldOfLocation = this.location;
+                    aNPC.GetComponent<AggressiveNPC>().fieldOfLocation = this.location;
                     //Instantiate(aNPC, this.transform.position, this.transform.rotation);
                     maxNPC.Add(aNPC);
     
                 }
                 if (randomNum > 4 && randomNum <= 10)
                 {
-                    GameObject pNPC = Instantiate(passiveNPC, this.transform.position, this.transform.rotation);
+                    GameObject pNPC = Instantiate(passiveNPC_1, this.transform.position, this.transform.rotation);
                     pNPC.transform.parent = this.transform;
-                    pNPC.GetComponent<GenericNPCMovement>().fieldOfLocation = this.location;
+                    pNPC.GetComponent<PassiveNPC>().fieldOfLocation = this.location;
                     //Instantiate(pNPC, this.transform.position, this.transform.rotation);
                     maxNPC.Add(pNPC);
                     

@@ -20,10 +20,7 @@ public class GenericNPCMovement : MonoBehaviour
     [SerializeField]
     public float speed;
 
-    [SerializeField]
-    List<RuntimeAnimatorController> collectionOfAnimationController;
     
-    Animator anim;
 
     void Start()
     {
@@ -35,9 +32,7 @@ public class GenericNPCMovement : MonoBehaviour
 
         rb2d = GetComponent<Rigidbody2D>();
 
-        collectionOfAnimationController = new List<RuntimeAnimatorController>();
-
-        anim = GetComponent<Animator>();
+        
 
     }
     void Update()

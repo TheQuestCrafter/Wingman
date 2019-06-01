@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class AggressiveNPC : GenericNPCMovement
-{ 
+{
 
     // Update is called once per frame
     void Update()

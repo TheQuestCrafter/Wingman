@@ -48,13 +48,20 @@ MonoBehaviour:
   spawnUntil: 1
   numberToSpawn: 5
   maxNPC: []
-  drunkNPC: {fileID: 1304225320245856099, guid: 51a195cb86f889b4995c0bd12bc7d608,
+  drunkNPC_1: {fileID: 1304225320245856099, guid: 51a195cb86f889b4995c0bd12bc7d608,
     type: 3}
-  aggressiveNPC: {fileID: 903225199056294939, guid: b84bb224ec399d848b61d4846057817f,
+  aggressiveNPC_1: {fileID: 903225199056294939, guid: b84bb224ec399d848b61d4846057817f,
     type: 3}
-  passiveNPC: {fileID: 7622926890978689463, guid: cef0151271c271c47ac7a64a6fcb022e,
+  passiveNPC_1: {fileID: 7622926890978689463, guid: cef0151271c271c47ac7a64a6fcb022e,
     type: 3}
   location: {fileID: 6306558547479182374}
+  aggressiveNPC:
+  - {fileID: 903225199056294939, guid: b84bb224ec399d848b61d4846057817f, type: 3}
+  - {fileID: 7219995776352340813, guid: 3c82424f375a3904ca832f5d0f2a1436, type: 3}
+  - {fileID: 6227616701993544015, guid: a592e5ee718689944a060996dc6939bc, type: 3}
+  - {fileID: 6194940573611282979, guid: 420791bc8b97c0042a611acf8c61c0e0, type: 3}
+  drunkNPC: []
+  passiveNPC: []
 --- !u!1 &6306558547479182374
 GameObject:
   m_ObjectHideFlags: 0
