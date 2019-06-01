@@ -128,6 +128,8 @@ MonoBehaviour:
   player: {fileID: 0}
   distanceFromPlayer: {x: 0, y: 0}
   playerCheck: []
+  thisCollider2D: {fileID: 7221566708820970750}
+  savedCollider2Ds: []
   radius: 2
 --- !u!95 &8517693331524257346
 Animator:

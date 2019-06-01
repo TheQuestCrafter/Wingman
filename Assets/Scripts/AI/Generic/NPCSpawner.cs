@@ -23,10 +23,12 @@ public class NPCSpawner : MonoBehaviour
     [SerializeField]
     List<GameObject> passiveNPC;
 
+    private int maxDrunkNPC, maxAggressiveNPC;
 
     void Start()
     {
-        
+        maxAggressiveNPC = 0;
+        maxDrunkNPC = 0;
         maxNPC = new List<GameObject>();
     }
 
@@ -52,7 +54,7 @@ public class NPCSpawner : MonoBehaviour
                 int randomPassiveNPC = (int)Random.Range(1f, 11f);
 
 
-                if (randomNum == 1)
+                if (randomNum == 1 && maxDrunkNPC < 1)
                 {
 
                     GameObject dNPC = Instantiate(drunkNPC[randomDrunkNPC], this.transform.position, this.transform.rotation);
@@ -60,14 +62,16 @@ public class NPCSpawner : MonoBehaviour
                     dNPC.GetComponent<DrunkNPC>().fieldOfLocation = this.location;
                     //Instantiate(dNPC, this.transform.position, this.transform.rotation);
                     maxNPC.Add(dNPC);
+                    maxDrunkNPC++;
                 }
-                if (randomNum > 1 && randomNum <= 4)
+                if (randomNum > 1 && randomNum <= 4 && maxAggressiveNPC < 2)
                 {
                     GameObject aNPC = Instantiate(aggressiveNPC[randomAggressiveNPC], this.transform.position, this.transform.rotation);
                     aNPC.transform.parent = this.transform;
                     aNPC.GetComponent<AggressiveNPC>().fieldOfLocation = this.location;
                     //Instantiate(aNPC, this.transform.position, this.transform.rotation);
                     maxNPC.Add(aNPC);
+                    maxAggressiveNPC++;
     
                 }
                 if (randomNum > 4 && randomNum <= 10)

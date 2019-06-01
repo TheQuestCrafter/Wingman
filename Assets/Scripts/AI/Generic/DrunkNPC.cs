@@ -18,12 +18,18 @@ public class DrunkNPC : GenericNPCMovement
     Collider2D[] playerCheck;
 
     [SerializeField]
+    private Collider2D thisCollider2D;
+    [SerializeField]
+    List<Collider2D> savedCollider2Ds;
+
+    [SerializeField]
     float radius;
 
     // Start is called before the first frame update
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+        savedCollider2Ds = new List<Collider2D>();
     }
 
     // Update is called once per frame
@@ -117,9 +123,18 @@ public class DrunkNPC : GenericNPCMovement
         if (collision.collider.CompareTag("Obstacle"))
         {
             speed = 0;
+            waitUntil = Time.time + waitTimeLength;
         }
 
-        waitUntil = Time.time + waitTimeLength;
+        if (collision.collider.CompareTag("PassiveNPC") || collision.collider.CompareTag("DrunkNPC"))
+        {
+            savedCollider2Ds.Add(collision.collider);
+            Physics2D.IgnoreCollision(collision.collider, thisCollider2D, true);
+
+        }
+
+
+        
     }
 
     private void OnDrawGizmos()

@@ -122,6 +122,7 @@ MonoBehaviour:
   destinationLocation: {x: 0, y: 0}
   fieldOfLocation: {fileID: 0}
   speed: 0
+  thisCollider2D: {fileID: 8997037261660845262}
 --- !u!61 &8997037261660845262
 BoxCollider2D:
   m_ObjectHideFlags: 0
