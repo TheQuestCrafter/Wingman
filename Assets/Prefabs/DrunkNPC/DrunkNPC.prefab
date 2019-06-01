@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 7609134566319684061}
   - component: {fileID: 7255749874787632316}
   - component: {fileID: 5818649413343809294}
-  - component: {fileID: 7815052223571836075}
   - component: {fileID: 2949144917107023052}
   - component: {fileID: 4242870169839867504}
   m_Layer: 0
@@ -74,7 +73,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 4108f4ba09db7a8459e3161f1a4edd5a, type: 3}
-  m_Color: {r: 0, g: 1, b: 0.065570354, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -127,22 +126,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   player: {fileID: 0}
---- !u!58 &7815052223571836075
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1304225320245856099}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.3
+  distanceFromPlayer: {x: 0, y: 0}
+  playerCheck: []
+  radius: 2
 --- !u!95 &2949144917107023052
 Animator:
   serializedVersion: 3

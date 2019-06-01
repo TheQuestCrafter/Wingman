@@ -10,21 +10,31 @@ public class DrunkNPC : GenericNPCMovement
     [SerializeField]
     GameObject player;
 
-    CircleCollider2D cc2d;
+    private Vector2 playerLocation;
+    [SerializeField]
+    private Vector2 distanceFromPlayer;
+
+    [SerializeField]
+    Collider2D[] playerCheck;
+
+    [SerializeField]
+    float radius;
+
     // Start is called before the first frame update
     void Start()
     {
-        cc2d = GetComponent<CircleCollider2D>();
         player = GameObject.FindGameObjectWithTag("Player");
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Physics2D.OverlapCircle(this.transform.position, cc2d.radius, playerMask))
+        playerCheck = Physics2D.OverlapCircleAll(this.transform.position, radius, playerMask);
+        if(playerCheck.Length != 0)
         {
+            Debug.Log("Chase");
             this.destinationLocation = player.transform.position;
-            speed = 1;
+            speed = 1.4f;
             Movement();
         }
         else
@@ -35,10 +45,73 @@ public class DrunkNPC : GenericNPCMovement
 
     public override void Movement()
     {
-        
-        transform.position = Vector2.MoveTowards(transform.position, destinationLocation, speed * Time.deltaTime);
-    }
+        playerLocation = player.GetComponent<Controls>().direction;
+        if (playerLocation.x == 0 && playerLocation.y == 1) // Up
+        {
+            distanceFromPlayer.x = 0;
+            
+            this.transform.position = Vector2.MoveTowards(this.transform.position, DistanceFromPlayer(distanceFromPlayer, player.transform.position), speed * Time.deltaTime);
+        }
+        else if (playerLocation.x == 0 && playerLocation.y == -1) // Down
+        {
+            distanceFromPlayer.x = 0;
+            distanceFromPlayer.y = -distanceFromPlayer.y;
+            this.transform.position = Vector2.MoveTowards(this.transform.position, DistanceFromPlayer(distanceFromPlayer, player.transform.position), speed * Time.deltaTime);
 
+        }
+        else if (playerLocation.x == -1 && playerLocation.y == 0) //Left
+        {
+           
+            distanceFromPlayer.y = 0;
+            this.transform.position = Vector2.MoveTowards(this.transform.position, DistanceFromPlayer(distanceFromPlayer, player.transform.position), speed * Time.deltaTime);
+        }
+        else if (playerLocation.x == 1 && playerLocation.y == 0) // Right 
+        {
+            distanceFromPlayer.x = -distanceFromPlayer.x;
+            distanceFromPlayer.y = 0;
+            this.transform.position = Vector2.MoveTowards(this.transform.position, DistanceFromPlayer(distanceFromPlayer, player.transform.position), speed * Time.deltaTime);
+        }
+        else if (playerLocation.x == 1 && playerLocation.y == 1) // Up Right
+        {
+            distanceFromPlayer.x = 1;
+            distanceFromPlayer.y = 1;
+            this.transform.position = Vector2.MoveTowards(this.transform.position, DistanceFromPlayer(distanceFromPlayer, player.transform.position), speed * Time.deltaTime);
+        }
+        else if (playerLocation.x == -1 && playerLocation.y == 1) // Up Left
+        {
+            distanceFromPlayer.x = -distanceFromPlayer.x;
+            distanceFromPlayer.y = 1;
+            this.transform.position = Vector2.MoveTowards(this.transform.position, DistanceFromPlayer(distanceFromPlayer, player.transform.position), speed * Time.deltaTime);
+        }
+        else if (playerLocation.x == 1 && playerLocation.y == -1) // Down Right 
+        {
+            distanceFromPlayer.x = 1;
+            distanceFromPlayer.y = -distanceFromPlayer.y;
+            this.transform.position = Vector2.MoveTowards(this.transform.position, DistanceFromPlayer(distanceFromPlayer, player.transform.position), speed * Time.deltaTime);
+        }
+        else if (playerLocation.x == -1 && playerLocation.y == -1) // Down Left
+        {
+            distanceFromPlayer.x = -distanceFromPlayer.x;
+            distanceFromPlayer.y = -distanceFromPlayer.y;
+            this.transform.position = Vector2.MoveTowards(this.transform.position, DistanceFromPlayer(distanceFromPlayer, player.transform.position), speed * Time.deltaTime);
+        }
+        else
+        {
+            //Player is not moving
+        }
+    }
+    private Vector2 DistanceFromPlayer(Vector2 distance, Vector2 playerLocation)
+    {
+        Vector2 targetDistance = new Vector2();
+
+        targetDistance.x += playerLocation.x + distance.x;
+
+        targetDistance.y += playerLocation.y + distance.y;
+
+        //Debug.Log("X: " + targetDistance.x + " Y: " + targetDistance.y);
+
+        return targetDistance;
+    }
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.collider.CompareTag("Obstacle"))
@@ -47,5 +120,12 @@ public class DrunkNPC : GenericNPCMovement
         }
 
         waitUntil = Time.time + waitTimeLength;
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(this.transform.position, radius);
+
     }
 }
