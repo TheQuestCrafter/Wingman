@@ -6,6 +6,7 @@ public class Controls : MonoBehaviour
 {
     public Rigidbody2D rb2d;
     public CircleCollider2D cc2d;
+    public Animator myAnimator;
 
     public float hMove, vMove;
     public Vector2 direction;
@@ -23,6 +24,7 @@ public class Controls : MonoBehaviour
     {
         rb2d = this.gameObject.GetComponent<Rigidbody2D>();
         cc2d = this.gameObject.GetComponent<CircleCollider2D>();
+        myAnimator = this.gameObject.GetComponent<Animator>();
         movementSpeed = 2;
     }
 
@@ -55,8 +57,49 @@ public class Controls : MonoBehaviour
 
         rb2d.velocity = Vector3.SmoothDamp(rb2d.velocity, (directionNormalized * movementSpeed), ref velocity, movementSmoothing);
 
+        UpdateAnimator();
         //rb2d.velocity = direction * movementSpeed;
 
+    }
+
+    private void UpdateAnimator()
+    {
+        if(directionNormalized.x == 0 && directionNormalized.y == 0)
+        {
+            myAnimator.SetInteger("Direction", 0);
+        }
+        else if (directionNormalized.x == 0 && directionNormalized.y == -1)
+        {
+            myAnimator.SetInteger("Direction", 1);
+        }
+        else if (directionNormalized.x == 0 && directionNormalized.y == 1)
+        {
+            myAnimator.SetInteger("Direction", 2);
+        }
+        else if (directionNormalized.x == 1 && directionNormalized.y == 0)
+        {
+            myAnimator.SetInteger("Direction", 3);
+        }
+        else if (directionNormalized.x == -1 && directionNormalized.y == 0)
+        {
+            myAnimator.SetInteger("Direction", 4);
+        }
+        else if (directionNormalized.x == 1 && directionNormalized.y == -1)
+        {
+            myAnimator.SetInteger("Direction", 5);
+        }
+        else if (directionNormalized.x == 1 && directionNormalized.y == 1)
+        {
+            myAnimator.SetInteger("Direction", 6);
+        }
+        else if (directionNormalized.x == -1 && directionNormalized.y == -1)
+        {
+            myAnimator.SetInteger("Direction", 7);
+        }
+        else if (directionNormalized.x == -1 && directionNormalized.y == 1)
+        {
+            myAnimator.SetInteger("Direction", 8);
+        }
     }
 
     private void RotatePlayer()
