@@ -67,7 +67,7 @@ public class NPCSpawner : MonoBehaviour
                     maxNPC.Add(dNPC);
                     maxDrunkNPC++;
                 }
-                if (randomNum > 1 && randomNum <= 4 && maxAggressiveNPC < maxAggressiveNPC)
+                if (randomNum > 1 && randomNum <= 4 && maxAggressiveNPC < maxNumAggressiveNPC)
                 {
                     GameObject aNPC = Instantiate(aggressiveNPC[randomAggressiveNPC], this.transform.position, this.transform.rotation);
                     aNPC.transform.parent = this.transform;
