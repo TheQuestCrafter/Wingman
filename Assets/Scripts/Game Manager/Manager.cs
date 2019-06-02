@@ -6,6 +6,7 @@ using UnityEngine;
 public class Manager : MonoBehaviour
 {
     public GameObject playerObject;
+    public static GameObject playerTalkingTarget;
     public GameObject[] npcList = new GameObject[20];
     public GameObject[] coupleList = new GameObject[10];
     private List<string> possibleInterestsList;

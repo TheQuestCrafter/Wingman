@@ -38,7 +38,7 @@ public class Controls : MonoBehaviour
     void Update()
     {
         MovePlayer();
-        RotatePlayer();
+        UpdateClosestTalkingTarget();
         CheckTalkButton();
     }
 
@@ -102,14 +102,25 @@ public class Controls : MonoBehaviour
         }
     }
 
-    private void RotatePlayer()
+    private void UpdateClosestTalkingTarget()
     {
-        // Update the sprite here
+        float localMin = 10000;
+        foreach(GameObject go in nearbyTargets)
+        {
+            if(Vector3.Distance(go.transform.position, this.gameObject.transform.position) <= localMin)
+            {
+                localMin = Vector3.Distance(go.transform.position, this.gameObject.transform.position);
+                talkingTarget = go;
+            }
+        }
+
     }
 
     private void Talk()
     {
-
+        // Send the talking target to the GameManager
+        // Game Manager will handle the dialogue
+        Manager.playerTalkingTarget = this.talkingTarget;
     }
 
     private void CheckTalkButton()
@@ -132,8 +143,11 @@ public class Controls : MonoBehaviour
     {
         if (collision.gameObject.tag == "Lover") // ADD TAG  
         {
-            talkingTarget = collision.gameObject;
             nearbyTargets.Add(collision.gameObject);
+            if(nearbyTargets.Count == 1)
+            {
+                talkingTarget = collision.gameObject;
+            }
         }
     }
 
@@ -143,10 +157,10 @@ public class Controls : MonoBehaviour
         {
             nearbyTargets.Remove(collision.gameObject);
             
-            if(nearbyTargets.Count > 0)
-            {
-                talkingTarget = nearbyTargets[nearbyTargets.Count - 1]; // assign to most recently entered target
-            }
+            //if(nearbyTargets.Count > 0)
+            //{
+            //    talkingTarget = nearbyTargets[nearbyTargets.Count - 1]; // assign to most recently entered target
+            //}
         }
     }
 }
