@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8632876497044170173}
   m_Layer: 0
   m_Name: Lover
-  m_TagString: Untagged
+  m_TagString: Lover
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -99,7 +99,7 @@ MonoBehaviour:
   speed: 2
   player: {fileID: 0}
   interest: 
-  walkUp: 0
+  walkOff: 0
 --- !u!61 &8632876497044170173
 BoxCollider2D:
   m_ObjectHideFlags: 0

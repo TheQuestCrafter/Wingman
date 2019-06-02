@@ -9,6 +9,7 @@ TagManager:
   - AggressiveNPC
   - Obstacle
   - LSpawnLocation
+  - Lover
   layers:
   - Default
   - TransparentFX
