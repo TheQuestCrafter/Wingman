@@ -35,7 +35,6 @@ public class Lovers : MonoBehaviour
     {
         currentState = LoverStates.LookingForLover;
         maxPatience = patience;
-
     }
 
     // Update is called once per frame
