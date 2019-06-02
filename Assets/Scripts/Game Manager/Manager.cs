@@ -11,6 +11,7 @@ public class Manager : MonoBehaviour
     public static GameObject playerObject;
     public static GameObject playerTalkingTarget;
     public List<GameObject> coupleList;
+    public List<Transform> coupleSpawnPoints;
     public List<string> possibleInterestsList;
     public static string interestSaveLocation = AppDomain.CurrentDomain.DynamicDirectory + "interestList.txt";
 
@@ -54,10 +55,21 @@ public class Manager : MonoBehaviour
             {
                 coupleList.Add(temp[i]);
             }
+            else if(temp[i].tag == "LSpawnLocation")
+            {
+                coupleSpawnPoints.Add(temp[i].transform);
+            }
 
         }
         DetermineLoverCoupleInterest();
+
+        for(int i = 0; i < coupleList.Count; i++)
+        {
+            coupleList[i].transform.position = coupleSpawnPoints[i].position;
+        }
+        
     }
+    
 
     public static void CheckMatch()
     {
