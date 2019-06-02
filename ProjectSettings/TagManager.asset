@@ -19,7 +19,7 @@ TagManager:
   - 
   - Obstacle
   - Player
-  - 
+  - UISprite
   - 
   - 
   - 
@@ -47,4 +47,7 @@ TagManager:
     locked: 0
   - name: Player
     uniqueID: 4066463345
+    locked: 0
+  - name: New Layer
+    uniqueID: 711492059
     locked: 0

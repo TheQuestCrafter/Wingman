@@ -64,39 +64,39 @@ public class Controls : MonoBehaviour
 
     private void UpdateAnimator()
     {
-        if(directionNormalized.x == 0 && directionNormalized.y == 0)
+        if(direction.x == 0 && direction.y == 0)
         {
             myAnimator.SetInteger("Direction", 0);
         }
-        else if (directionNormalized.x == 0 && directionNormalized.y == -1)
+        else if (direction.x == 0 && direction.y == -1)
         {
             myAnimator.SetInteger("Direction", 1);
         }
-        else if (directionNormalized.x == 0 && directionNormalized.y == 1)
+        else if (direction.x == 0 && direction.y == 1)
         {
             myAnimator.SetInteger("Direction", 2);
         }
-        else if (directionNormalized.x == 1 && directionNormalized.y == 0)
+        else if (direction.x == 1 && direction.y == 0)
         {
             myAnimator.SetInteger("Direction", 3);
         }
-        else if (directionNormalized.x == -1 && directionNormalized.y == 0)
+        else if (direction.x == -1 && direction.y == 0)
         {
             myAnimator.SetInteger("Direction", 4);
         }
-        else if (directionNormalized.x == 1 && directionNormalized.y == -1)
+        else if (direction.x == 1 && direction.y == -1)
         {
             myAnimator.SetInteger("Direction", 5);
         }
-        else if (directionNormalized.x == 1 && directionNormalized.y == 1)
+        else if (direction.x == 1 && direction.y == 1)
         {
             myAnimator.SetInteger("Direction", 6);
         }
-        else if (directionNormalized.x == -1 && directionNormalized.y == -1)
+        else if (direction.x == -1 && direction.y == -1)
         {
             myAnimator.SetInteger("Direction", 7);
         }
-        else if (directionNormalized.x == -1 && directionNormalized.y == 1)
+        else if (direction.x == -1 && direction.y == 1)
         {
             myAnimator.SetInteger("Direction", 8);
         }

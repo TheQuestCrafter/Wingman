@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 1541274631349468801}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -3.52, y: -2.88, z: -0.028630428}
-  m_LocalScale: {x: 5.6, y: 5.6, z: 5.6}
+  m_LocalScale: {x: 7, y: 7, z: 5.6}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -71,7 +71,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 4
   m_Sprite: {fileID: 21300000, guid: d85bff180a2f9fb4198d7a0b5d002e47, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -123,6 +123,7 @@ MonoBehaviour:
   fieldOfLocation: {fileID: 0}
   speed: 0
   thisCollider2D: {fileID: 1958147959939851354}
+  savedCollider2Ds: []
 --- !u!61 &1958147959939851354
 BoxCollider2D:
   m_ObjectHideFlags: 0
