@@ -8,6 +8,7 @@ TagManager:
   - DrunkNPC
   - AggressiveNPC
   - Obstacle
+  - LSpawnLocation
   layers:
   - Default
   - TransparentFX
