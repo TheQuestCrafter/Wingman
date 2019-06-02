@@ -7,6 +7,7 @@ public class Controls : MonoBehaviour
     public Rigidbody2D rb2d;
     public CircleCollider2D cc2d;
     public Animator myAnimator;
+    public static bool canMove; // if in a loading screen or talking, don't let the player move
 
     public float hMove, vMove;
     public Vector2 direction;
@@ -15,7 +16,8 @@ public class Controls : MonoBehaviour
 
     private Vector3 velocity = Vector3.zero;
     private float movementSmoothing = 0.05f;
-    
+
+    public GameObject followingTarget; // Who is following the player.
     public GameObject talkingTarget; // Who the player is talking to. Will be most recently entered "Lover".
     public List<GameObject> nearbyTargets;
     public bool spaceDown;
@@ -31,15 +33,16 @@ public class Controls : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        canMove = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        MovePlayer();
-        RotatePlayer();
-        CheckTalkButton();
+        if(canMove)
+            MovePlayer();
+
+        UpdateClosestTalkingTarget();
     }
 
     private void MovePlayer()
@@ -57,6 +60,7 @@ public class Controls : MonoBehaviour
 
         rb2d.velocity = Vector3.SmoothDamp(rb2d.velocity, (directionNormalized * movementSpeed), ref velocity, movementSmoothing);
 
+        CheckTalkButton();
         UpdateAnimator();
         //rb2d.velocity = direction * movementSpeed;
 
@@ -102,14 +106,43 @@ public class Controls : MonoBehaviour
         }
     }
 
-    private void RotatePlayer()
+    private void UpdateClosestTalkingTarget()
     {
-        // Update the sprite here
+        float localMin = 10000;
+        foreach(GameObject go in nearbyTargets)
+        {
+            if(Vector3.Distance(go.transform.position, this.gameObject.transform.position) <= localMin)
+            {
+                localMin = Vector3.Distance(go.transform.position, this.gameObject.transform.position);
+                talkingTarget = go;
+            }
+        }
+
+    }
+
+    private void MatchSelected()
+    {
+        Manager.CheckMatch();
     }
 
     private void Talk()
     {
+        // Send the talking target to the GameManager
+        // Game Manager will handle the dialogue
+        Manager.playerTalkingTarget = this.talkingTarget;
+        canMove = false;
+        gameObject.GetComponent<CanvasGroup>().alpha = 1f;
 
+
+
+        if (followingTarget != null) // Match? Dialogue
+        {
+            Manager.TurnOnUI(2);
+        }
+        else // follow dialogue
+        {
+            Manager.TurnOnUI(1);
+        }
     }
 
     private void CheckTalkButton()
@@ -132,8 +165,11 @@ public class Controls : MonoBehaviour
     {
         if (collision.gameObject.tag == "Lover") // ADD TAG  
         {
-            talkingTarget = collision.gameObject;
             nearbyTargets.Add(collision.gameObject);
+            if(nearbyTargets.Count == 1)
+            {
+                talkingTarget = collision.gameObject;
+            }
         }
     }
 
@@ -143,10 +179,10 @@ public class Controls : MonoBehaviour
         {
             nearbyTargets.Remove(collision.gameObject);
             
-            if(nearbyTargets.Count > 0)
-            {
-                talkingTarget = nearbyTargets[nearbyTargets.Count - 1]; // assign to most recently entered target
-            }
+            //if(nearbyTargets.Count > 0)
+            //{
+            //    talkingTarget = nearbyTargets[nearbyTargets.Count - 1]; // assign to most recently entered target
+            //}
         }
     }
 }

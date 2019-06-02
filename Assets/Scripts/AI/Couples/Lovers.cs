@@ -23,7 +23,7 @@ public class Lovers : MonoBehaviour
     public GameObject player;
 
     public string interest;
-    public bool walkUp;
+    public bool walkOff;
 
     private Vector2 playerLocation;
     private Vector3 velocity = Vector3.zero;
@@ -64,7 +64,9 @@ public class Lovers : MonoBehaviour
     {
         if(player.GetComponent<Controls>().talkingTarget.Equals(this.gameObject))
         {
+            player.GetComponent<Controls>().followingTarget = this.gameObject;
             currentState = LoverStates.FollowingForLover;
+            
         }
     }
 
@@ -150,13 +152,13 @@ public class Lovers : MonoBehaviour
 
     private void WalkAway()
     {
-        if(walkUp)
+        if(walkOff)
         {
             distanceFromPlayer.x = -1;
             distanceFromPlayer.y = 0;
             this.transform.position = Vector2.MoveTowards(this.transform.position, DistanceFromPlayer(distanceFromPlayer, this.transform.position), speed * Time.deltaTime);
         }
-        else if(!walkUp)
+        else if(!walkOff)
         {
             distanceFromPlayer.x = 1;
             distanceFromPlayer.y = 0;
