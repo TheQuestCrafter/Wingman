@@ -38,7 +38,7 @@ public class LoadingScreen : MonoBehaviour
             }
             else
             {
-                Destroy(this.gameObject, 6.0f);
+                Destroy(this.gameObject, 2.0f);
             }
         }
     }

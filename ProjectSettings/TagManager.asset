@@ -10,6 +10,8 @@ TagManager:
   - Obstacle
   - LSpawnLocation
   - Lover
+  - LoadingScreen
+  - EventSystem
   layers:
   - Default
   - TransparentFX

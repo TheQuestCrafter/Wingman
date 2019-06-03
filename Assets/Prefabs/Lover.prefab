@@ -95,7 +95,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentState: 0
   distanceFromPlayer: {x: 1.25, y: 1.25}
-  patience: 0
+  patience: 10000
   speed: 2
   player: {fileID: 0}
   interest: 

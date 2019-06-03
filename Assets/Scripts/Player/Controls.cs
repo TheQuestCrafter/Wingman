@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Controls : MonoBehaviour
 {
+    public GameObject loadingScreen;
     public Rigidbody2D rb2d;
     public CircleCollider2D cc2d;
     public Animator myAnimator;
@@ -16,6 +17,7 @@ public class Controls : MonoBehaviour
 
     private Vector3 velocity = Vector3.zero;
     private float movementSmoothing = 0.05f;
+    private int loadingScreenCheck;
 
     public GameObject followingTarget; // Who is following the player.
     public GameObject talkingTarget; // Who the player is talking to. Will be most recently entered "Lover".
@@ -28,6 +30,7 @@ public class Controls : MonoBehaviour
         cc2d = this.gameObject.GetComponent<CircleCollider2D>();
         myAnimator = this.gameObject.GetComponent<Animator>();
         movementSpeed = 2;
+        loadingScreenCheck = 0;
     }
 
     // Start is called before the first frame update
@@ -39,10 +42,20 @@ public class Controls : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (loadingScreen == null && loadingScreenCheck == 0)
+        {
+            canMove = true;
+            loadingScreenCheck++;
+        }            
+
         if(canMove)
             MovePlayer();
 
-        UpdateClosestTalkingTarget();
+    }
+
+    private void FixedUpdate()
+    {
+        CheckTalkButton();
     }
 
     private void MovePlayer()
@@ -60,7 +73,6 @@ public class Controls : MonoBehaviour
 
         rb2d.velocity = Vector3.SmoothDamp(rb2d.velocity, (directionNormalized * movementSpeed), ref velocity, movementSmoothing);
 
-        CheckTalkButton();
         UpdateAnimator();
         //rb2d.velocity = direction * movementSpeed;
 
@@ -131,8 +143,6 @@ public class Controls : MonoBehaviour
         // Game Manager will handle the dialogue
         Manager.playerTalkingTarget = this.talkingTarget;
         canMove = false;
-        gameObject.GetComponent<CanvasGroup>().alpha = 1f;
-
 
 
         if (followingTarget != null) // Match? Dialogue
@@ -147,11 +157,12 @@ public class Controls : MonoBehaviour
 
     private void CheckTalkButton()
     {
-        spaceDown = Input.GetKeyDown("space");
+        spaceDown = Input.GetKeyDown("e");
 
         if(spaceDown)
         {
-            if(talkingTarget != null) // talking target is not blank
+            UpdateClosestTalkingTarget();
+            if (talkingTarget != null) // talking target is not blank
             {
                 if(nearbyTargets.Contains(talkingTarget)) // talking target is within talking radius
                 {
@@ -166,10 +177,10 @@ public class Controls : MonoBehaviour
         if (collision.gameObject.tag == "Lover") // ADD TAG  
         {
             nearbyTargets.Add(collision.gameObject);
-            if(nearbyTargets.Count == 1)
-            {
-                talkingTarget = collision.gameObject;
-            }
+            //if(nearbyTargets.Count == 1)
+            //{
+            //    talkingTarget = collision.gameObject;
+            //}
         }
     }
 
