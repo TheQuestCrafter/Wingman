@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Lovers : MonoBehaviour
 {
-    enum LoverStates
+    public enum LoverStates
     {
         LookingForLover,
         FollowingForLover,
@@ -12,7 +12,7 @@ public class Lovers : MonoBehaviour
     }
 
     [SerializeField]
-    LoverStates currentState;
+    public LoverStates currentState;
     [SerializeField]
     Vector2 distanceFromPlayer;
     [SerializeField]
@@ -61,17 +61,17 @@ public class Lovers : MonoBehaviour
 
     private void UpdateLookingForLover()
     {
-        if(player.GetComponent<Controls>().talkingTarget.Equals(this.gameObject))
+        if(player.GetComponent<Controls>().followingTarget.Equals(this.gameObject))
         {
             player.GetComponent<Controls>().followingTarget = this.gameObject;
             currentState = LoverStates.FollowingForLover;
-            
         }
     }
 
     private void UpdateFollowingForLover()
     {
         playerLocation = player.GetComponent<Controls>().direction;
+        this.gameObject.GetComponent<BoxCollider2D>().isTrigger = true;
         MovementForLover();
         if(patience <= 0)
         {

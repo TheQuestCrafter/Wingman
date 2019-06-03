@@ -9,7 +9,7 @@ public class LoversSpawn : MonoBehaviour
 
     void Awake()
     {
-        
+        Spawn();
     }
 
     void Spawn()
