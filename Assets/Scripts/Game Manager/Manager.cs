@@ -42,7 +42,7 @@ public class Manager : MonoBehaviour
         FindCanvas();
         possibleInterestsList = new List<string>();
         LoadFiles(); // Check file for possible interests
-        timeLimit = 40;
+        timeLimit = 180;
         buttons = dialogueCG.GetComponentsInChildren<Button>();
         dialogueCG.alpha = 0;
         maxScore = 5;
