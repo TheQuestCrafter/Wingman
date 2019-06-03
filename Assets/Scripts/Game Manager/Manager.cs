@@ -9,7 +9,7 @@ using UnityEngine.SceneManagement;
 
 public class Manager : MonoBehaviour
 {
-    public static CanvasGroup dialogueCG, timeCG;
+    public static CanvasGroup dialogueCG, timeCG, scoreCG;
 
     public static GameObject playerObject;
     public static GameObject playerTalkingTarget;
@@ -85,8 +85,8 @@ public class Manager : MonoBehaviour
         {
             EndGame();
         }
-       
-       
+
+        scoreCG.GetComponent<Text>().text = Score.ToString();
     }
 
     private void UpdateTime()
@@ -130,6 +130,7 @@ public class Manager : MonoBehaviour
     private void FindCanvas()
     {
         CanvasGroup[] temp = FindObjectsOfType<CanvasGroup>();
+        scoreCG = temp[2];
         dialogueCG = temp[1];
         timeCG = temp[0];
     }
