@@ -87,6 +87,14 @@ public class Manager : MonoBehaviour
 
         for(int i = 0; i < coupleList.Count; i++)
         {
+            int tempIndex = UnityEngine.Random.Range(0, coupleList.Count);
+            GameObject tempLover = coupleList[tempIndex];
+            coupleList[tempIndex] = coupleList[i];
+            coupleList[i] = tempLover;
+        }
+
+        for(int i = 0; i < coupleList.Count; i++)
+        {
             coupleList[i].GetComponent<Lovers>().player = Manager.playerObject;
             coupleList[i].transform.position = coupleSpawnPoints[i].position;
         }
