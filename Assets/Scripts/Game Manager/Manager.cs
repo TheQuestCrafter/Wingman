@@ -86,7 +86,7 @@ public class Manager : MonoBehaviour
             EndGame();
         }
 
-        scoreCG.GetComponent<Text>().text = Score.ToString();
+        //scoreCG.GetComponent<Text>().text = Score.ToString();
     }
 
     private void UpdateTime()
@@ -130,7 +130,7 @@ public class Manager : MonoBehaviour
     private void FindCanvas()
     {
         CanvasGroup[] temp = FindObjectsOfType<CanvasGroup>();
-        scoreCG = temp[2];
+        //scoreCG = temp[2];
         dialogueCG = temp[1];
         timeCG = temp[0];
     }
@@ -196,8 +196,8 @@ public class Manager : MonoBehaviour
             playerObject.GetComponent<Controls>().followingTarget.GetComponent<Lovers>().walkOff = true;
             playerObject.GetComponent<Controls>().talkingTarget.GetComponent<Lovers>().matchTrue = true;
             playerObject.GetComponent<Controls>().followingTarget.GetComponent<Lovers>().matchTrue = true;
-            //playerObject.GetComponent<Controls>().talkingTarget.GetComponent<Lovers>().playSound = false;
-            //playerObject.GetComponent<Controls>().followingTarget.GetComponent<Lovers>().playSound = true;
+            playerObject.GetComponent<Controls>().talkingTarget.GetComponent<Lovers>().playSound = false;
+            playerObject.GetComponent<Controls>().followingTarget.GetComponent<Lovers>().playSound = true;
 
             Score++;
             // play not broken hearts
@@ -209,8 +209,8 @@ public class Manager : MonoBehaviour
             playerObject.GetComponent<Controls>().followingTarget.GetComponent<Lovers>().walkOff = false;
             playerObject.GetComponent<Controls>().talkingTarget.GetComponent<Lovers>().matchTrue = false;
             playerObject.GetComponent<Controls>().followingTarget.GetComponent<Lovers>().matchTrue = false;
-            //playerObject.GetComponent<Controls>().talkingTarget.GetComponent<Lovers>().playSound = false;
-           // playerObject.GetComponent<Controls>().followingTarget.GetComponent<Lovers>().playSound = true;
+            playerObject.GetComponent<Controls>().talkingTarget.GetComponent<Lovers>().playSound = false;
+            playerObject.GetComponent<Controls>().followingTarget.GetComponent<Lovers>().playSound = true;
             // Play Broken hearts
         }
 

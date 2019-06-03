@@ -39,6 +39,7 @@ public class Lovers : MonoBehaviour
     public string interest;
     public bool walkOff;
     public bool matchTrue;
+    public bool playSound;
 
     private Vector2 playerLocation;
     private Vector3 velocity = Vector3.zero;
@@ -46,6 +47,7 @@ public class Lovers : MonoBehaviour
     private float maxPatience;
     private Animator myAnimator;
     private AudioSource myAudio;
+    private bool playOnce;
 
     // Start is called before the first frame update
     void Start()
@@ -55,6 +57,7 @@ public class Lovers : MonoBehaviour
         savedCollider2Ds = new List<Collider2D>();
         myAnimator = this.GetComponent<Animator>();
         myAudio = this.GetComponent<AudioSource>();
+        playOnce = true;
     }
 
     // Update is called once per frame
@@ -192,12 +195,26 @@ public class Lovers : MonoBehaviour
     {
         if(matchTrue)
         {
-            myAudio.PlayOneShot(smoochClip);
+            if(playSound)
+            {
+                if(playOnce)
+                {
+                    myAudio.PlayOneShot(smoochClip);
+                    playOnce = false;
+                }
+            }
             myHeartParticles.Play();
         }
         else
         {
-            myAudio.PlayOneShot(brokenHeart);
+            if (playSound)
+            {
+                if (playOnce)
+                {
+                    myAudio.PlayOneShot(brokenHeart);
+                    playOnce = false;
+                }
+            }
             myBrokenParticles.Play();
         }
     }
