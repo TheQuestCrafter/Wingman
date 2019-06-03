@@ -9,7 +9,7 @@ using UnityEngine.SceneManagement;
 public class Manager : MonoBehaviour
 {
     public static CanvasGroup cg;
-    public static GameObject gameEventSystem;
+
     public static GameObject playerObject;
     public static GameObject playerTalkingTarget;
     public List<GameObject> coupleList;
@@ -18,6 +18,12 @@ public class Manager : MonoBehaviour
     public List<string> possiblePunsList;
     public static string interestSaveLocation = AppDomain.CurrentDomain.DynamicDirectory + "interestList.txt";
     public static string punsSaveLocation = AppDomain.CurrentDomain.DynamicDirectory + "punsList.txt";
+    public static int Score, maxScore;
+
+    [SerializeField]
+    private GameObject option1;
+    [SerializeField]
+    private EventSystem gameEventSystem;
 
     static Button[] buttons; 
 
@@ -32,6 +38,8 @@ public class Manager : MonoBehaviour
         timeLimit = 180;
         buttons = cg.GetComponentsInChildren<Button>();
         cg.alpha = 0;
+        maxScore = 5;
+        
     }
 
 
@@ -39,6 +47,8 @@ public class Manager : MonoBehaviour
     void Start()
     {
         FindAll();
+        gameEventSystem = FindObjectOfType<EventSystem>();
+        gameEventSystem.SetSelectedGameObject(option1);
     }
 
     // Update is called once per frame
@@ -71,10 +81,6 @@ public class Manager : MonoBehaviour
             {
                 coupleSpawnPoints.Add(temp[i].transform);
             }
-            else if (temp[i].tag == "EventSystem")
-            {
-                gameEventSystem = temp[i];
-            }
 
         }
         DetermineLoverCoupleInterest();
@@ -99,6 +105,9 @@ public class Manager : MonoBehaviour
             // Good Match
             playerObject.GetComponent<Controls>().talkingTarget.GetComponent<Lovers>().walkOff = true;
             playerObject.GetComponent<Controls>().followingTarget.GetComponent<Lovers>().walkOff = true;
+
+            Score++;
+            EndGame();
             // play not broken hearts
         }
         else
@@ -106,6 +115,7 @@ public class Manager : MonoBehaviour
             // Bad Match
             playerObject.GetComponent<Controls>().talkingTarget.GetComponent<Lovers>().walkOff = true;
             playerObject.GetComponent<Controls>().followingTarget.GetComponent<Lovers>().walkOff = false;
+            EndGame();
             // Play Broken hearts
         }
 
@@ -180,7 +190,7 @@ public class Manager : MonoBehaviour
         cg.alpha = 1f;
         Controls.canMove = false;
 
-        //gameEventSystem.GetComponent<EventSystem>().SetSelectedGameObject(buttons[0]);
+        
 
         ChangeUIText();
         
@@ -213,18 +223,21 @@ public class Manager : MonoBehaviour
     private static void ChangeUIText()
     {
         Text[] temp = cg.GetComponentsInChildren<Text>();
-        
-        for(int i = 0; i < temp.Length; i++)
+        string Dialogue = "";
+        for (int i = 0; i < temp.Length; i++)
         {
             if (temp[i].name == "DialogueText")
             {
+                
                 char[] chars = temp[i].text.ToCharArray();
                 for(int j = 0; j < chars.Length; j++)
                 {
+                    Dialogue += chars[j];
                     if(chars[j] == ':')
                     {
-                        temp[i].text.Substring(0, (j + 1));
-                        temp[i].text += " " + playerTalkingTarget.GetComponent<Lovers>().interest;
+                        Dialogue += " ";
+                        j = chars.Length + 1;
+                        temp[i].text = Dialogue + playerTalkingTarget.GetComponent<Lovers>().interest;
                     }
                 }
             }
@@ -258,4 +271,17 @@ public class Manager : MonoBehaviour
         Controls.canMove = true;
         TurnOffUI();
     }
+
+    static void EndGame()
+    {
+        if(Score == maxScore)
+        {
+            //YOU WIN
+        }
+        else
+        {
+            //YOU LOSE
+        }
+    }
+    
 }
