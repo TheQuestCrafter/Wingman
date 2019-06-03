@@ -21,20 +21,24 @@ public class Lovers : MonoBehaviour
     float speed;
     [SerializeField]
     public GameObject player;
+    [SerializeField]
+    List<Collider2D> savedCollider2Ds;
 
     public string interest;
     public bool walkOff;
 
     private Vector2 playerLocation;
     private Vector3 velocity = Vector3.zero;
-    private float movementSmoothing = 0.05f;
     private float time;
     private float maxPatience;
+    [SerializeField]
+    private Collider2D thisCollider2D;
     // Start is called before the first frame update
     void Start()
     {
         currentState = LoverStates.LookingForLover;
         maxPatience = patience;
+        savedCollider2Ds = new List<Collider2D>();
     }
 
     // Update is called once per frame
@@ -71,7 +75,6 @@ public class Lovers : MonoBehaviour
     private void UpdateFollowingForLover()
     {
         playerLocation = player.GetComponent<Controls>().direction;
-        this.gameObject.GetComponent<BoxCollider2D>().isTrigger = true;
         MovementForLover();
         if(patience <= 0)
         {
@@ -202,5 +205,19 @@ public class Lovers : MonoBehaviour
     public string ReturnInterest()
     {
         return interest;
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(player.GetComponent<Controls>().followingTarget == this.gameObject)
+        {
+            if (collision.collider.CompareTag("PassiveNPC") || collision.collider.CompareTag("DrunkNPC") || collision.collider.CompareTag("Player"))
+            {
+                savedCollider2Ds.Add(collision.collider);
+                Physics2D.IgnoreCollision(collision.collider, thisCollider2D, true);
+
+            }
+        }
+        
     }
 }

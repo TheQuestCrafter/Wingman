@@ -98,8 +98,10 @@ MonoBehaviour:
   patience: 10000
   speed: 2
   player: {fileID: 0}
+  savedCollider2Ds: []
   interest: 
   walkOff: 0
+  thisCollider2D: {fileID: 8632876497044170173}
 --- !u!61 &8632876497044170173
 BoxCollider2D:
   m_ObjectHideFlags: 0
