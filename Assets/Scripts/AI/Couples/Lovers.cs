@@ -39,7 +39,6 @@ public class Lovers : MonoBehaviour
     public string interest;
     public bool walkOff;
     public bool matchTrue;
-    public bool playSound;
 
     private Vector2 playerLocation;
     private Vector3 velocity = Vector3.zero;
@@ -193,18 +192,12 @@ public class Lovers : MonoBehaviour
     {
         if(matchTrue)
         {
-            if(playSound)
-            {
-                myAudio.PlayOneShot(smoochClip);
-            }
+            myAudio.PlayOneShot(smoochClip);
             myHeartParticles.Play();
         }
         else
         {
-            if (playSound)
-            {
-                myAudio.PlayOneShot(brokenHeart);
-            }
+            myAudio.PlayOneShot(brokenHeart);
             myBrokenParticles.Play();
         }
     }
