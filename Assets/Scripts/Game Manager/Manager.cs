@@ -20,7 +20,7 @@ public class Manager : MonoBehaviour
     public static string interestSaveLocation = AppDomain.CurrentDomain.DynamicDirectory + "interestList.txt";
     public static string punsSaveLocation = AppDomain.CurrentDomain.DynamicDirectory + "punsList.txt";
     public static int Score, maxScore;
-    private bool playAudioOnce;
+    private bool playAudioOnce, timeStart;
 
     [SerializeField]
     private GameObject option1;
@@ -35,6 +35,8 @@ public class Manager : MonoBehaviour
     public int seconds;
     public float timeLimit; // in seconds
     public static float displayTime; // used to display a countdown;
+    [SerializeField]
+    private float compensateTime;
     public string timeString; // the time as a string
 
     private void Awake()
@@ -48,7 +50,7 @@ public class Manager : MonoBehaviour
         maxScore = 5;
         playAudioOnce = false;
         DontDestroyOnLoad(this.gameObject);
-        
+        compensateTime = 0;
     }
 
 
@@ -57,18 +59,28 @@ public class Manager : MonoBehaviour
     {
         FindAll();
         gameEventSystem = FindObjectOfType<EventSystem>();
-        gameEventSystem.SetSelectedGameObject(option1);        
+        gameEventSystem.SetSelectedGameObject(option1);
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        UpdateTime();
+        if (playerObject.GetComponent<Controls>().loadingScreen != null)
+        {
+            compensateTime = Time.time;
+        }
+        if (playerObject.GetComponent<Controls>().loadingScreen == null)
+        {
+            UpdateTime();
+        }
+       
+       
     }
 
     private void UpdateTime()
     {        
-        displayTime = timeLimit - Time.time;
+        displayTime = timeLimit - Time.time + compensateTime;
 
         if(displayTime > 0)
         {
