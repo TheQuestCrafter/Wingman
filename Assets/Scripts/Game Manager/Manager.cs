@@ -74,6 +74,17 @@ public class Manager : MonoBehaviour
         {
             UpdateTime();
         }
+        int empties = 0;
+        foreach (GameObject go in coupleList)
+        {
+            if (go == null)
+                empties++;
+        }
+
+       if(Score == maxScore || empties >= 9)
+        {
+            EndGame();
+        }
        
        
     }
@@ -182,11 +193,10 @@ public class Manager : MonoBehaviour
             // Good Match
             playerObject.GetComponent<Controls>().talkingTarget.GetComponent<Lovers>().walkOff = true;
             playerObject.GetComponent<Controls>().followingTarget.GetComponent<Lovers>().walkOff = true;
-            //playerObject.GetComponent<Controls>().talkingTarget.GetComponent<Lovers>().matchTrue = true;
-            //playerObject.GetComponent<Controls>().followingTarget.GetComponent<Lovers>().matchTrue = true;
+            playerObject.GetComponent<Controls>().talkingTarget.GetComponent<Lovers>().matchTrue = true;
+            playerObject.GetComponent<Controls>().followingTarget.GetComponent<Lovers>().matchTrue = true;
 
             Score++;
-            EndGame();
             // play not broken hearts
         }
         else
@@ -194,9 +204,8 @@ public class Manager : MonoBehaviour
             // Bad Match
             playerObject.GetComponent<Controls>().talkingTarget.GetComponent<Lovers>().walkOff = true;
             playerObject.GetComponent<Controls>().followingTarget.GetComponent<Lovers>().walkOff = false;
-            //playerObject.GetComponent<Controls>().talkingTarget.GetComponent<Lovers>().matchTrue = false;
-            //playerObject.GetComponent<Controls>().followingTarget.GetComponent<Lovers>().matchTrue = false;
-            EndGame();
+            playerObject.GetComponent<Controls>().talkingTarget.GetComponent<Lovers>().matchTrue = false;
+            playerObject.GetComponent<Controls>().followingTarget.GetComponent<Lovers>().matchTrue = false;
             // Play Broken hearts
         }
 
