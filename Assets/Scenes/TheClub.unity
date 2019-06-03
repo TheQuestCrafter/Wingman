@@ -1249,6 +1249,7 @@ GameObject:
   - component: {fileID: 396997208}
   - component: {fileID: 396997207}
   - component: {fileID: 396997206}
+  - component: {fileID: 396997210}
   m_Layer: 5
   m_Name: TimerAndScoreCanvas
   m_TagString: Untagged
@@ -1337,6 +1338,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!225 &396997210
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 396997205}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &472258420
 GameObject:
   m_ObjectHideFlags: 0
@@ -1612,7 +1625,7 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 1140238010}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1097700403}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b83e6123af802314d8246720f6b59823, type: 3}
@@ -3941,6 +3954,108 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1073950907}
   m_CullTransparentMesh: 0
+--- !u!1 &1097700403 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4388535548885069816, guid: 106290cc6033d15478034613ec67fc70,
+    type: 3}
+  m_PrefabInstance: {fileID: 1140238010}
+  m_PrefabAsset: {fileID: 0}
+--- !u!82 &1097700404
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1097700403}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 42b2965e9b592714d88d47b7a6f898aa, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &1119750154
 GameObject:
   m_ObjectHideFlags: 0
@@ -4103,6 +4218,11 @@ PrefabInstance:
       propertyPath: coupleList.Array.data[6]
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 4388535548885069819, guid: 106290cc6033d15478034613ec67fc70,
+        type: 3}
+      propertyPath: thirtySecondClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 32d1c8fd7c9b8da428eddf9b98840ac5, type: 3}
     - target: {fileID: 4388535548885069818, guid: 106290cc6033d15478034613ec67fc70,
         type: 3}
       propertyPath: m_LocalPosition.x

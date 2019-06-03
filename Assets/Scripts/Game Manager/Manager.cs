@@ -6,9 +6,10 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
+
 public class Manager : MonoBehaviour
 {
-    public static CanvasGroup cg;
+    public static CanvasGroup dialogueCG, timeCG;
 
     public static GameObject playerObject;
     public static GameObject playerTalkingTarget;
@@ -19,26 +20,34 @@ public class Manager : MonoBehaviour
     public static string interestSaveLocation = AppDomain.CurrentDomain.DynamicDirectory + "interestList.txt";
     public static string punsSaveLocation = AppDomain.CurrentDomain.DynamicDirectory + "punsList.txt";
     public static int Score, maxScore;
+    private bool playAudioOnce;
 
     [SerializeField]
     private GameObject option1;
     [SerializeField]
     private EventSystem gameEventSystem;
+    [SerializeField]
+    private AudioClip thirtySecondClip;
 
-    static Button[] buttons; 
+    static Button[] buttons;
 
+    public int minutes;
+    public int seconds;
     public float timeLimit; // in seconds
-    public float displayTime; // used to display a countdown;
+    public static float displayTime; // used to display a countdown;
+    public string timeString; // the time as a string
 
     private void Awake()
     {
         FindCanvas();
         possibleInterestsList = new List<string>();
         LoadFiles(); // Check file for possible interests
-        timeLimit = 180;
-        buttons = cg.GetComponentsInChildren<Button>();
-        cg.alpha = 0;
+        timeLimit = 40;
+        buttons = dialogueCG.GetComponentsInChildren<Button>();
+        dialogueCG.alpha = 0;
         maxScore = 5;
+        playAudioOnce = false;
+        DontDestroyOnLoad(this.gameObject);
         
     }
 
@@ -48,19 +57,58 @@ public class Manager : MonoBehaviour
     {
         FindAll();
         gameEventSystem = FindObjectOfType<EventSystem>();
-        gameEventSystem.SetSelectedGameObject(option1);
+        gameEventSystem.SetSelectedGameObject(option1);        
     }
 
     // Update is called once per frame
     void Update()
     {
+        UpdateTime();
+    }
+
+    private void UpdateTime()
+    {        
         displayTime = timeLimit - Time.time;
+
+        if(displayTime > 0)
+        {
+            minutes = Mathf.FloorToInt((displayTime / 60));
+            seconds = Mathf.FloorToInt(displayTime - (60 * minutes));
+        }
+        else if(displayTime <= 0)
+        {
+            EndGame();
+        }
+
+        if (minutes == 0 && seconds == 30 && playAudioOnce == false)
+        {
+            this.gameObject.GetComponent<AudioSource>().clip = thirtySecondClip;
+            this.gameObject.GetComponent<AudioSource>().Play();
+            playAudioOnce = true;
+        }
+        GetUITime();
+    }
+
+    public void GetUITime()
+    {
+        timeString = Convert.ToString(minutes);
+        timeString += ":";
+        
+        if(seconds < 10)
+        {
+            timeString += "0";
+        }
+        timeString += Convert.ToString(seconds);
+
+        timeCG.GetComponentInChildren<Text>().text = timeString;
+
     }
 
     private void FindCanvas()
     {
         CanvasGroup[] temp = FindObjectsOfType<CanvasGroup>();
-        cg = temp[0];
+        dialogueCG = temp[1];
+        timeCG = temp[0];
     }
 
     private void FindAll()
@@ -101,6 +149,15 @@ public class Manager : MonoBehaviour
         
     }
     
+    public static void LoadLoseScreen()
+    {
+        SceneManager.LoadScene("YouLose");
+    }
+
+    public static void LoadWinScreen()
+    {
+        SceneManager.LoadScene("YouWin");
+    }
 
     public static void CheckMatch()
     {
@@ -113,6 +170,8 @@ public class Manager : MonoBehaviour
             // Good Match
             playerObject.GetComponent<Controls>().talkingTarget.GetComponent<Lovers>().walkOff = true;
             playerObject.GetComponent<Controls>().followingTarget.GetComponent<Lovers>().walkOff = true;
+            //playerObject.GetComponent<Controls>().talkingTarget.GetComponent<Lovers>().matchTrue = true;
+            //playerObject.GetComponent<Controls>().followingTarget.GetComponent<Lovers>().matchTrue = true;
 
             Score++;
             EndGame();
@@ -123,6 +182,8 @@ public class Manager : MonoBehaviour
             // Bad Match
             playerObject.GetComponent<Controls>().talkingTarget.GetComponent<Lovers>().walkOff = true;
             playerObject.GetComponent<Controls>().followingTarget.GetComponent<Lovers>().walkOff = false;
+            //playerObject.GetComponent<Controls>().talkingTarget.GetComponent<Lovers>().matchTrue = false;
+            //playerObject.GetComponent<Controls>().followingTarget.GetComponent<Lovers>().matchTrue = false;
             EndGame();
             // Play Broken hearts
         }
@@ -136,6 +197,18 @@ public class Manager : MonoBehaviour
 
     private void DetermineLoverCoupleInterest()
     {
+        GameObject tempLover;
+        int rand;
+        for(int i = 0; i < coupleList.Count; i++)
+        {
+            rand = UnityEngine.Random.Range(0, coupleList.Count);
+
+            tempLover = coupleList[i];
+            coupleList[i] = coupleList[rand];
+            coupleList[rand] = tempLover;
+
+        }
+
         for(int i = 0; i < coupleList.Count; i++)
         {
             string sharedInterest = possibleInterestsList[UnityEngine.Random.Range(0, possibleInterestsList.Count)];
@@ -184,7 +257,7 @@ public class Manager : MonoBehaviour
 
     public static void TurnOffUI()
     {
-        cg.alpha = 0f;
+        dialogueCG.alpha = 0f;
         playerObject.GetComponent<Controls>().talkingTarget = null;
         playerTalkingTarget = null;
 
@@ -195,7 +268,7 @@ public class Manager : MonoBehaviour
     {
         
         // 1 is no follower, 2 is yes follower
-        cg.alpha = 1f;
+        dialogueCG.alpha = 1f;
         Controls.canMove = false;
 
         
@@ -230,7 +303,7 @@ public class Manager : MonoBehaviour
 
     private static void ChangeUIText()
     {
-        Text[] temp = cg.GetComponentsInChildren<Text>();
+        Text[] temp = dialogueCG.GetComponentsInChildren<Text>();
         string Dialogue = "";
         for (int i = 0; i < temp.Length; i++)
         {
@@ -282,13 +355,16 @@ public class Manager : MonoBehaviour
 
     static void EndGame()
     {
-        if(Score == maxScore)
+        if (Score == maxScore)
         {
             //YOU WIN
+            LoadWinScreen();
+
         }
-        else
+        else if (Score != maxScore || displayTime <= 0)
         {
             //YOU LOSE
+            LoadLoseScreen();
         }
     }
     

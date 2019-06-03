@@ -162,7 +162,7 @@ public class Controls : MonoBehaviour
         if(spaceDown)
         {
             UpdateClosestTalkingTarget();
-            if (talkingTarget != null) // talking target is not blank
+            if (talkingTarget != null && talkingTarget != followingTarget) // talking target is not blank
             {
                 if(nearbyTargets.Contains(talkingTarget)) // talking target is within talking radius
                 {

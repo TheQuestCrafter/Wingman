@@ -14,4 +14,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/TheClub.unity
     guid: 2f0defaada8eeae4f8fe1daadb99d29c
+  - enabled: 1
+    path: Assets/Scenes/YouLose.unity
+    guid: 3c0a00978e8f8e04281c4f4406da6d08
+  - enabled: 1
+    path: Assets/Scenes/YouWin.unity
+    guid: 9b5fdca5b0e0a6f47be34d4b2fb49808
   m_configObjects: {}
