@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.ParticleSystem;
 
 public class Lovers : MonoBehaviour
 {
@@ -23,22 +24,31 @@ public class Lovers : MonoBehaviour
     public GameObject player;
     [SerializeField]
     List<Collider2D> savedCollider2Ds;
+    [SerializeField]
+    private Collider2D thisCollider2D;
+    [SerializeField]
+    ParticleSystem myHeartParticles;
+    [SerializeField]
+    ParticleSystem myBrokenParticles;
+
 
     public string interest;
     public bool walkOff;
+    public bool matchTrue;
 
     private Vector2 playerLocation;
     private Vector3 velocity = Vector3.zero;
     private float time;
     private float maxPatience;
-    [SerializeField]
-    private Collider2D thisCollider2D;
+    private Animator myAnimator;
+
     // Start is called before the first frame update
     void Start()
     {
         currentState = LoverStates.LookingForLover;
         maxPatience = patience;
         savedCollider2Ds = new List<Collider2D>();
+        myAnimator = this.GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -91,12 +101,14 @@ public class Lovers : MonoBehaviour
     {
         if (playerLocation.x == 0 && playerLocation.y == 1) // Up
         {
+            myAnimator.SetBool("Forward", false);
             distanceFromPlayer.x = 0;
             distanceFromPlayer.y = -distanceFromPlayer.y;
             this.transform.position = Vector2.MoveTowards(this.transform.position, DistanceFromPlayer(distanceFromPlayer, player.transform.position), speed * Time.deltaTime);
         }
         else if (playerLocation.x == 0 && playerLocation.y == -1) // Down
         {
+            myAnimator.SetBool("Forward", true);
             distanceFromPlayer.x = 0;
             this.transform.position = Vector2.MoveTowards(this.transform.position, DistanceFromPlayer(distanceFromPlayer, player.transform.position), speed * Time.deltaTime);
 
@@ -166,7 +178,20 @@ public class Lovers : MonoBehaviour
             distanceFromPlayer.y = 0;
             this.transform.position = Vector2.MoveTowards(this.transform.position, DistanceFromPlayer(distanceFromPlayer, this.transform.position), speed * Time.deltaTime);
         }
+        PlayParticles();
         DestroySelf();
+    }
+
+    private void PlayParticles()
+    {
+        if(matchTrue)
+        {
+            myHeartParticles.Play();
+        }
+        else
+        {
+            myBrokenParticles.Play();
+        }
     }
 
     private void DestroySelf()

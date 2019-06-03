@@ -289,6 +289,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5847db828eabc144ad45c32f36945bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  loadingScreen: {fileID: 0}
   rb2d: {fileID: 1020160382}
   cc2d: {fileID: 0}
   myAnimator: {fileID: 0}
@@ -297,6 +298,7 @@ MonoBehaviour:
   direction: {x: 0, y: 0}
   directionNormalized: {x: 0, y: 0}
   movementSpeed: 5
+  followingTarget: {fileID: 0}
   talkingTarget: {fileID: 1512506859}
   nearbyTargets: []
   spaceDown: 0
