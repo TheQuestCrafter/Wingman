@@ -30,6 +30,10 @@ public class Lovers : MonoBehaviour
     ParticleSystem myHeartParticles;
     [SerializeField]
     ParticleSystem myBrokenParticles;
+    [SerializeField]
+    AudioClip smoochClip;
+    [SerializeField]
+    AudioClip brokenHeart;
 
 
     public string interest;
@@ -41,6 +45,7 @@ public class Lovers : MonoBehaviour
     private float time;
     private float maxPatience;
     private Animator myAnimator;
+    private AudioSource myAudio;
 
     // Start is called before the first frame update
     void Start()
@@ -49,6 +54,7 @@ public class Lovers : MonoBehaviour
         maxPatience = patience;
         savedCollider2Ds = new List<Collider2D>();
         myAnimator = this.GetComponent<Animator>();
+        myAudio = this.GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -186,10 +192,12 @@ public class Lovers : MonoBehaviour
     {
         if(matchTrue)
         {
+            myAudio.PlayOneShot(smoochClip);
             myHeartParticles.Play();
         }
         else
         {
+            myAudio.PlayOneShot(brokenHeart);
             myBrokenParticles.Play();
         }
     }
