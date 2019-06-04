@@ -41,6 +41,13 @@ public class Manager : MonoBehaviour
 
     private void Awake()
     {
+       
+    }
+
+
+    // Start is called before the first frame update
+    void Start()
+    {
         FindCanvas();
         possibleInterestsList = new List<string>();
         LoadFiles(); // Check file for possible interests
@@ -51,12 +58,10 @@ public class Manager : MonoBehaviour
         playAudioOnce = false;
         DontDestroyOnLoad(this.gameObject);
         compensateTime = 0;
-    }
 
 
-    // Start is called before the first frame update
-    void Start()
-    {
+
+
         FindAll();
         gameEventSystem = FindObjectOfType<EventSystem>();
         gameEventSystem.SetSelectedGameObject(option1);
@@ -86,7 +91,7 @@ public class Manager : MonoBehaviour
             EndGame();
         }
 
-        //scoreCG.GetComponent<Text>().text = Score.ToString();
+        //scoreCG.GetComponentInChildren<Text>().text = Score.ToString();
     }
 
     private void UpdateTime()

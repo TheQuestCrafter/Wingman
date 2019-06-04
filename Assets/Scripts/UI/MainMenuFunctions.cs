@@ -16,7 +16,7 @@ public class MainMenuFunctions : MonoBehaviour
 
     public void ExitGame()
     {
-        System.Environment.Exit(0);
+        Application.Quit();
     }
 
 }
