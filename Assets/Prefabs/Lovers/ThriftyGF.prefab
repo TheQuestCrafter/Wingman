@@ -4810,6 +4810,7 @@ MonoBehaviour:
   interest: 
   walkOff: 0
   matchTrue: 0
+  playSound: 0
 --- !u!61 &7273328351401881291
 BoxCollider2D:
   m_ObjectHideFlags: 0

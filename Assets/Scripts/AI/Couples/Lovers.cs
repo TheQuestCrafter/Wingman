@@ -58,6 +58,10 @@ public class Lovers : MonoBehaviour
         myAnimator = this.GetComponent<Animator>();
         myAudio = this.GetComponent<AudioSource>();
         playOnce = true;
+        if (player == null)
+        {
+            this.player = Manager.playerObject;
+        }
     }
 
     // Update is called once per frame
@@ -261,7 +265,7 @@ public class Lovers : MonoBehaviour
     {
         if(player.GetComponent<Controls>().followingTarget == this.gameObject)
         {
-            if (collision.collider.CompareTag("PassiveNPC") || collision.collider.CompareTag("DrunkNPC") || collision.collider.CompareTag("Player"))
+            if (collision.collider.CompareTag("PassiveNPC") || collision.collider.CompareTag("DrunkNPC") || collision.collider.CompareTag("Player") || collision.collider.CompareTag("Lover"))
             {
                 savedCollider2Ds.Add(collision.collider);
                 Physics2D.IgnoreCollision(collision.collider, thisCollider2D, true);

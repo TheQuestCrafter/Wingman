@@ -39,6 +39,10 @@ public class Manager : MonoBehaviour
     private float compensateTime;
     public string timeString; // the time as a string
 
+    [SerializeField]
+    List<GameObject> SpawnLovers;
+
+
     private void Awake()
     {
        
@@ -48,6 +52,8 @@ public class Manager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //coupleSpawnPoints = new List<Transform>();
+
         FindCanvas();
         possibleInterestsList = new List<string>();
         LoadFiles(); // Check file for possible interests
@@ -58,14 +64,19 @@ public class Manager : MonoBehaviour
         playAudioOnce = false;
         DontDestroyOnLoad(this.gameObject);
         compensateTime = 0;
-
-
-
-
+        Spawn();
         FindAll();
         gameEventSystem = FindObjectOfType<EventSystem>();
         gameEventSystem.SetSelectedGameObject(option1);
         
+    }
+
+    public void Spawn()
+    {
+        foreach (GameObject l in SpawnLovers)
+        {
+            Instantiate(l, this.transform.position, this.transform.rotation);
+        }
     }
 
     // Update is called once per frame
@@ -142,6 +153,7 @@ public class Manager : MonoBehaviour
 
     private void FindAll()
     {
+        Debug.Log("Going into the FindAll()");
         coupleList = new List<GameObject>();
         GameObject[] temp = FindObjectsOfType<GameObject>();
         for(int i = 0; i < temp.Length; i++)
@@ -152,6 +164,7 @@ public class Manager : MonoBehaviour
             }
             else if (temp[i].tag == "Lover")
             {
+                Debug.Log("Found a LoverV2");
                 coupleList.Add(temp[i]);
             }
             else if(temp[i].tag == "LSpawnLocation")
@@ -160,22 +173,31 @@ public class Manager : MonoBehaviour
             }
 
         }
+        Debug.Log("Before");
         DetermineLoverCoupleInterest();
+        Debug.Log("After");
 
         for(int i = 0; i < coupleList.Count; i++)
         {
+            // Shuffling the lovers in the couple list
             int tempIndex = UnityEngine.Random.Range(0, coupleList.Count);
             GameObject tempLover = coupleList[tempIndex];
             coupleList[tempIndex] = coupleList[i];
             coupleList[i] = tempLover;
+
+            //look here for the bug
+            
+            //coupleList[i].GetComponent<Lovers>().player = Manager.playerObject;
+            
+           
         }
 
-        for(int i = 0; i < coupleList.Count; i++)
+        for (int i = 0; i < coupleList.Count; i++)
         {
-            coupleList[i].GetComponent<Lovers>().player = Manager.playerObject;
-            coupleList[i].transform.position = coupleSpawnPoints[i].position;
+            coupleList[i].transform.position = coupleSpawnPoints[i].transform.position;
+            Debug.Log("Iteration " + i);
         }
-        
+
     }
     
     public static void LoadLoseScreen()
@@ -398,5 +420,5 @@ public class Manager : MonoBehaviour
             LoadLoseScreen();
         }
     }
-    
+   
 }

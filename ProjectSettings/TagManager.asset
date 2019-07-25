@@ -12,6 +12,7 @@ TagManager:
   - Lover
   - LoadingScreen
   - EventSystem
+  - LoverV2
   layers:
   - Default
   - TransparentFX

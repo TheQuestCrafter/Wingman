@@ -4804,9 +4804,12 @@ MonoBehaviour:
   thisCollider2D: {fileID: 6704385833139343923}
   myHeartParticles: {fileID: 2275694948670023210}
   myBrokenParticles: {fileID: 4834953597071285534}
+  smoochClip: {fileID: 8300000, guid: f2b021f6a4ce5154ca80fbcf2598107f, type: 3}
+  brokenHeart: {fileID: 8300000, guid: c6172c99927b22f49992b0f3f53ef1dc, type: 3}
   interest: 
   walkOff: 0
   matchTrue: 0
+  playSound: 0
 --- !u!61 &6704385833139343923
 BoxCollider2D:
   m_ObjectHideFlags: 0

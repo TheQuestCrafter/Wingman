@@ -7,12 +7,17 @@ public class LoversSpawn : MonoBehaviour
     [SerializeField]
     List<GameObject> Lovers;
 
-    void Start()
+    private void Awake()
     {
         Spawn();
     }
 
-    void Spawn()
+    void Start()
+    {
+       
+    }
+
+    public void Spawn()
     {
         foreach(GameObject l in Lovers)
         {
